@@ -8,18 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		FC2E7435266CAFFB002D53EC /* GitHubClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E7434266CAFFB002D53EC /* GitHubClientApp.swift */; };
-		FC2E7437266CAFFB002D53EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E7436266CAFFB002D53EC /* ContentView.swift */; };
+		FC2E7437266CAFFB002D53EC /* RepoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E7436266CAFFB002D53EC /* RepoListView.swift */; };
 		FC2E7439266CB004002D53EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2E7438266CB004002D53EC /* Assets.xcassets */; };
 		FC2E743C266CB004002D53EC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2E743B266CB004002D53EC /* Preview Assets.xcassets */; };
+		FC2E7444266CB57C002D53EC /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E7443266CB57C002D53EC /* Repo.swift */; };
+		FC2E7446266CB587002D53EC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E7445266CB587002D53EC /* User.swift */; };
+		FC2E7449266CB813002D53EC /* RepoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E7448266CB813002D53EC /* RepoRow.swift */; };
+		FC2E744B266CB8C2002D53EC /* RepoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E744A266CB8C2002D53EC /* RepoDetailView.swift */; };
+		FC2E744F266CBF81002D53EC /* Repo+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E744E266CBF81002D53EC /* Repo+mock.swift */; };
+		FC2E7451266CBF94002D53EC /* User+mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2E7450266CBF94002D53EC /* User+mock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FC2E7431266CAFFB002D53EC /* GitHubClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC2E7434266CAFFB002D53EC /* GitHubClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubClientApp.swift; sourceTree = "<group>"; };
-		FC2E7436266CAFFB002D53EC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FC2E7436266CAFFB002D53EC /* RepoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoListView.swift; sourceTree = "<group>"; };
 		FC2E7438266CB004002D53EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC2E743B266CB004002D53EC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FC2E743D266CB004002D53EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC2E7443266CB57C002D53EC /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
+		FC2E7445266CB587002D53EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FC2E7448266CB813002D53EC /* RepoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoRow.swift; sourceTree = "<group>"; };
+		FC2E744A266CB8C2002D53EC /* RepoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetailView.swift; sourceTree = "<group>"; };
+		FC2E744E266CBF81002D53EC /* Repo+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repo+mock.swift"; sourceTree = "<group>"; };
+		FC2E7450266CBF94002D53EC /* User+mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+mock.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				FC2E7434266CAFFB002D53EC /* GitHubClientApp.swift */,
-				FC2E7436266CAFFB002D53EC /* ContentView.swift */,
+				FC2E744C266CB8E6002D53EC /* Views */,
+				FC2E7447266CB590002D53EC /* Models */,
 				FC2E7438266CB004002D53EC /* Assets.xcassets */,
 				FC2E743D266CB004002D53EC /* Info.plist */,
 				FC2E743A266CB004002D53EC /* Preview Content */,
@@ -64,9 +77,38 @@
 		FC2E743A266CB004002D53EC /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				FC2E744D266CBEA6002D53EC /* Mocks */,
 				FC2E743B266CB004002D53EC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FC2E7447266CB590002D53EC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FC2E7443266CB57C002D53EC /* Repo.swift */,
+				FC2E7445266CB587002D53EC /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FC2E744C266CB8E6002D53EC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FC2E7436266CAFFB002D53EC /* RepoListView.swift */,
+				FC2E7448266CB813002D53EC /* RepoRow.swift */,
+				FC2E744A266CB8C2002D53EC /* RepoDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FC2E744D266CBEA6002D53EC /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				FC2E744E266CBF81002D53EC /* Repo+mock.swift */,
+				FC2E7450266CBF94002D53EC /* User+mock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +180,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC2E7437266CAFFB002D53EC /* ContentView.swift in Sources */,
+				FC2E7449266CB813002D53EC /* RepoRow.swift in Sources */,
+				FC2E744F266CBF81002D53EC /* Repo+mock.swift in Sources */,
+				FC2E7446266CB587002D53EC /* User.swift in Sources */,
+				FC2E7444266CB57C002D53EC /* Repo.swift in Sources */,
+				FC2E744B266CB8C2002D53EC /* RepoDetailView.swift in Sources */,
+				FC2E7437266CAFFB002D53EC /* RepoListView.swift in Sources */,
+				FC2E7451266CBF94002D53EC /* User+mock.swift in Sources */,
 				FC2E7435266CAFFB002D53EC /* GitHubClientApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
