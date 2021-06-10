@@ -44,13 +44,14 @@ class ReposLoader: ObservableObject {
 
     func call() {
         let reposPublisher = Future<[Repo], Error> { promise in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
                 promise(.success([
                     .mock1, .mock2, .mock3, .mock4, .mock5
                 ]))
             }
         }
         reposPublisher
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 print("Finished: ",completion)
             }, receiveValue: { [weak self] repos in
