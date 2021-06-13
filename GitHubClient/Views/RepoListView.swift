@@ -13,17 +13,44 @@ struct RepoListView: View {
 
     var body: some View {
         NavigationView {
-            if reposLoader.repos.isEmpty {
-                ProgressView("loading...")
-            } else {
-                List(reposLoader.repos) { repo in
-                    NavigationLink(
-                        destination: RepoDetailView(repo: repo)) {
-                        RepoRow(repo: repo)
+            Group {
+                switch reposLoader.repos {
+                case .idle, .loading:
+                    ProgressView("loading...")
+                case .failed:
+                    VStack {
+                        Group {
+                            Image("GitHubMark")
+                            Text("Failed to load repositories")
+                                .padding(.top, 4)
+                        }
+                        .foregroundColor(.black)
+                        .opacity(0.4)
+                        Button(
+                            action: {
+                                reposLoader.call() // リトライボタンをタップしたときに再度リクエストを投げる
+                            }, label: {
+                                Text("Retry")
+                                    .fontWeight(.bold)
+                            }
+                        )
+                        .padding(.top, 8)
+                    }
+                case let .loaded(repos):
+                    if repos.isEmpty {
+                        Text("No repositories")
+                            .fontWeight(.bold)
+                    } else {
+                        List(repos) { repo in
+                            NavigationLink(
+                                destination: RepoDetailView(repo: repo)) {
+                                RepoRow(repo: repo)
+                            }
+                        }
                     }
                 }
-                .navigationTitle("Repositories")
             }
+            .navigationTitle("Repositories")
         }
         .onAppear {
             reposLoader.call()
@@ -38,8 +65,17 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+enum Stateful<Value> {
+    case idle // まだデータを取得しにいっていない
+    case loading // 読み込み中
+    case failed(Error) // 読み込み失敗、遭遇したエラーを保持
+    case loaded(Value) // 読み込み完了、読み込まれたデータを保持
+}
+
+
 class ReposLoader: ObservableObject {
-    @Published private(set) var repos = [Repo]()
+    @Published private(set) var repos: Stateful<[Repo]> = .idle
+
     private var cancellabels = Set<AnyCancellable>()
 
     func call() {
@@ -63,16 +99,17 @@ class ReposLoader: ObservableObject {
 
         repoPublisher
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
+            .handleEvents(receiveSubscription: { [weak self] _ in
+                self?.repos = .loading
+            })
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure(let error):
                     print("Error: ", error)
-                case .finished: print("Finished")
+                case .finished: print("Finished: ", completion)
                 }
-
-                print("Finished: ",completion)
             }, receiveValue: { [weak self] repos in
-                self?.repos = repos
+                self?.repos = .loaded(repos)
             }).store(in: &cancellabels)
     }
 
