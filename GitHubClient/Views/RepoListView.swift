@@ -43,16 +43,33 @@ class ReposLoader: ObservableObject {
     private var cancellabels = Set<AnyCancellable>()
 
     func call() {
-        let reposPublisher = Future<[Repo], Error> { promise in
-            DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
-                promise(.success([
-                    .mock1, .mock2, .mock3, .mock4, .mock5
-                ]))
+        let url = URL(string: "https://api.github.com/orgs/mixigroup/repos")!
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        urlRequest.allHTTPHeaderFields = [
+            "Accept": "application/vnd.github.v3+json"
+        ]
+
+        let repoPublisher = URLSession.shared.dataTaskPublisher(for: urlRequest)
+            .tryMap() { element -> Data in
+                guard let httpResponse = element.response as? HTTPURLResponse,
+                      httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return element.data
             }
-        }
-        reposPublisher
+            .decode(type: [Repo].self, decoder: JSONDecoder())
+
+        repoPublisher
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error: ", error)
+                case .finished: print("Finished")
+                }
+
                 print("Finished: ",completion)
             }, receiveValue: { [weak self] repos in
                 self?.repos = repos
