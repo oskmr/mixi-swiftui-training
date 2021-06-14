@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Combine
 @testable import GitHubClient
 
 class RepoListViewModelTests: XCTestCase {
@@ -14,7 +15,25 @@ class RepoListViewModelTests: XCTestCase {
     }
 
     func test_onAppear_正常系() {
+        let viewModel = RepoListViewModel(
+            repoRepository: MockRepoRepository(
+                repos: [.mock1, .mock2]
+            )
+        )
+    }
 
+    struct MockRepoRepository: RepoRepository {
+        let repos: [Repo]
+
+        init(repos: [Repo]) {
+            self.repos = repos
+        }
+
+        func fetchRepos() -> AnyPublisher<[Repo], Error> {
+            Just(repos)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
     }
 
 }
